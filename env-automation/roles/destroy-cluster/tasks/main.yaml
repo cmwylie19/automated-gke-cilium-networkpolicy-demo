@@ -1,0 +1,4 @@
+---
+- name: Destroy cluster
+  ansible.builtin.shell: "{{ gcloud }} container clusters delete {{ cluster_name }} --zone {{ zone }} --quiet"
+

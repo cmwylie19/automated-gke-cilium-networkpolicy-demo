@@ -1,0 +1,6 @@
+---
+- name: Set GKE project
+  ansible.builtin.shell: "{{ gcloud }} config set project {{ gke_project }}" 
+  
+- name: Disable GKE API for the project
+  shell: "{{ gcloud }} services disable container.googleapis.com" 

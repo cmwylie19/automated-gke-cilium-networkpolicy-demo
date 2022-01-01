@@ -1,0 +1,6 @@
+---
+- name: Set GKE project
+  ansible.builtin.shell: "{{ gcloud }} config set project {{ gke_project }}" 
+
+- name: Enable GKE API for the project
+  ansible.builtin.shell: "{{ gcloud }} services enable container.googleapis.com" 

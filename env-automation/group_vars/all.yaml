@@ -1,0 +1,37 @@
+gke_project: initstart-bog-2023
+
+# Path of kubectl, output of `which kubectl`
+kubectl: /usr/local/bin/kubectl
+
+# Path of helm, output of `which helm`
+helm: /usr/local/bin/helm
+
+# Path of gcloud, output of `which gcloud`
+gcloud: /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/gcloud
+
+cluster_name: us-east-1
+
+# https://cloud.google.com/kubernetes-engine/docs/concepts/node-images
+# Container-Optimized OS
+image_type: COS
+
+# https://cloud.google.com/compute/docs/machine-types
+machine_type: n1-standard-4
+
+num_nodes: 3
+
+# GCP IP Addresses
+# https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr
+
+# Cluster IPV4 CDIR
+cluster_cidr: 10.0.0.0/21
+
+# Services CIDR
+services_cidr: 10.4.0.0/19
+
+network:
+  name: skynet
+  range: 10.4.32.0/27
+
+# https://cloud.google.com/compute/docs/regions-zones#locations
+zone: us-east1-c

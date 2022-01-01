@@ -1,0 +1,12 @@
+---
+- name: Create cluster
+#  ansible.builtin.shell: "{{ gcloud }} container clusters create {{ cluster_name }} --image-type {{ image_type }} --num-nodes {{ num_nodes }} --machine-type {{ machine_type }} --zone {{ zone }}"
+  ansible.builtin.shell: "{{ gcloud }} container clusters create {{ cluster_name }} --image-type {{ image_type }} --enable-ip-alias --cluster-ipv4-cidr {{ cluster_cidr }} --services-ipv4-cidr {{ services_cidr }} --create-subnetwork name='{{ network.name }}',range={{ network.range }} --num-nodes {{ num_nodes }} --machine-type {{ machine_type }} --zone {{ zone }}"
+
+
+- name: Retrieve credentials
+  ansible.builtin.shell: "{{ gcloud }} container clusters get-credentials {{ cluster_name }} --zone {{ zone }}"
+  register: credentials
+
+- name: Display credentials
+  debug: var=credentials.stderr_lines

@@ -1,0 +1,7 @@
+- name: Spin Up Environment
+  hosts: localhost
+  gather_facts: false
+  roles:
+  - setup-gcp
+  - create-cluster
+  - deploy-cilium

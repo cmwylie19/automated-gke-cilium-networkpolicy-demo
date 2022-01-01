@@ -1,0 +1,7 @@
+- name: Tear Down Environment
+  hosts: localhost
+  gather_facts: false
+  roles:
+  - remove-cilium
+  - destroy-cluster
+  - revert-gcp

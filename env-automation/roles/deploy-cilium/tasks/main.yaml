@@ -1,0 +1,35 @@
+---
+- name: Extract CIDR
+  ansible.builtin.shell: "{{ gcloud }} container clusters describe {{ cluster_name }} --zone {{ zone }} --format 'value(clusterIpv4Cidr)'"
+  register: NATIVE_CIDR
+
+- name: Display NATIVE_CIDR
+  debug: var=NATIVE_CIDR 
+
+- name: Add Cilium repo 
+  kubernetes.core.helm_repository:
+    binary_path: "{{ helm }}"
+    name: cilium
+    repo_url: https://helm.cilium.io/
+
+- name: Deploy Cilium release via Helm
+  kubernetes.core.helm:
+    binary_path: "{{ helm }}"
+    wait: true
+    name: cilium
+    chart_ref: cilium/cilium
+    release_namespace: kube-system
+    chart_version: 1.9.11
+    values:
+      nativeRoutingCIDR: "{{ NATIVE_CIDR.stdout_lines[0] }}"
+      ipam:
+        mode: kubernetes
+      gke:
+        enabled: true
+      cni:
+        binPath: /home/kubernetes/bin
+      nodeinit:
+        restartPods: true
+        enabled: true
+        reconfigureKubelet: true
+        removeCbrBridge: true
